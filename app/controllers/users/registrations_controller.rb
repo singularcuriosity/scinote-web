@@ -130,13 +130,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
     render_403 && return unless Rails.configuration.x.enable_user_registration
     build_resource(sign_up_params)
     valid_resource = resource.valid?
+    puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    puts "cofnig new_team_on_signup"
+    puts Rails.configuration.x.new_team_on_signup
     # ugly checking if new team on sign up is enabled :(
     if Rails.configuration.x.new_team_on_signup
       # Create new team for the new user
       @team = Team.new
       @team.name = params[:team][:name]
       valid_team = @team.valid?
-
+      puts "-------------- valid_team *------------------"
+      puts valid_team
+      puts "---------------valid resource---------------"
+      puts valid_resource
       if valid_team && valid_resource
         # this must be called after @team variable is defined. Otherwise this
         # variable won't be accessable in view.
@@ -145,7 +151,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
           unless Rails.configuration.x.enable_email_confirmations
             resource.update(confirmed_at: resource.created_at)
           end
-
+          puts "--------------- resource valid --------"
+          puts resource.valid?
+          puts "-------------------- resource.persisted? ---------------"
+          puts resource.persisted?
           if resource.valid? && resource.persisted?
             @team.created_by = resource # set created_by for oraganization
             @team.save
