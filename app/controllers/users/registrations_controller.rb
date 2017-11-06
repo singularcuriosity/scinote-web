@@ -146,7 +146,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       puts "-------------------- rRESOURCE ------------------ "
       puts resource
       puts "--------------------  recource errors------------------ "
-      puts resource.errors
+      puts resource.errors.full_messages.join(', ').to_s
       if valid_team && valid_resource
         # this must be called after @team variable is defined. Otherwise this
         # variable won't be accessable in view.
