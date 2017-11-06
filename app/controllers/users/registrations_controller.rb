@@ -143,6 +143,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
       puts valid_team
       puts "---------------valid resource---------------"
       puts valid_resource
+      puts "-------------------- rRESOURCE ------------------ "
+      puts resource
+      puts "--------------------  recource errors------------------ "
+      puts resource.errors
       if valid_team && valid_resource
         # this must be called after @team variable is defined. Otherwise this
         # variable won't be accessable in view.
